@@ -10,11 +10,11 @@ Device::FTDI - perl extension to talk to FTDI chips
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Carp;
 
@@ -137,6 +137,8 @@ sub new {
 Most of device methods return negative value in case of error. You can get
 error description using L</error_string> method.
 
+=cut
+
 =head2 $dev->error_string
 X<error_string>
 
@@ -146,6 +148,16 @@ Returns string describing error after last operation
 
 sub error_string {
     return _error_string( shift->{_ctx} );
+}
+
+=head2 $dev->reset
+
+Resets the device
+
+=cut
+
+sub reset {
+    return _reset(shift->{_ctx});
 }
 
 =head2 $dev->purge_rx_buffer
@@ -347,6 +359,20 @@ sub read_data {
     return _read_data( $self->{_ctx}, $_[1], $size);
 }
 
+=head2 $dev->set_bitmode($mask, $mode)
+
+Enable/disable bitbang modes. I<$mask> -- bitmask to configure lines, High/ON
+value configures a line as output. I<$mode> may be one of the following:
+C<BITMODE_RESET>, C<BITMODE_BITBANG>, C<BITMODE_MPSSE>, C<BITMODE_SYNCBB>,
+C<BITMODE_MCU>, C<BITMODE_OPTO>, C<BITMODE_CBUS>, C<BITMODE_SYNCFF>.
+
+=cut
+
+sub set_bitmode {
+    my ($self, $mask, $mode) = @_;
+    return _set_bitmode($self->{_ctx}, $mask, $mode);
+}
+
 sub DESTROY {
     my $self = shift;
     _close_device($self->{_ctx});
@@ -367,11 +393,8 @@ Pavel Shaydo, C<< <zwon at cpan.org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-device-ftdi at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Device-FTDI>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-=head1 SUPPORT
+Please report any bugs or feature requests via GitHub bugtracker for this project:
+L<https://github.com/trinitum/perl-Device-FTDI/issues>.
 
 =head1 LICENSE AND COPYRIGHT
 

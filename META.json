@@ -22,7 +22,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "0"
+            "Test::More" : "0.94"
          }
       },
       "configure" : {
@@ -37,5 +37,17 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/trinitum/perl-Device-FTDI/issues"
+      },
+      "homepage" : "https://github.com/trinitum/perl-Device-FTDI",
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "url" : "git://github.com/trinitum/perl-Device-FTDI"
+      }
+   },
+   "version" : "0.02"
 }

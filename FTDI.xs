@@ -167,6 +167,14 @@ dftdi_error_string(ftdi)
         RETVAL
 
 int
+dftdi_reset(ftdi)
+	struct ftdi_context *ftdi;
+    CODE:
+        RETVAL = ftdi_usb_reset(ftdi);
+    OUTPUT:
+        RETVAL
+
+int
 dftdi_purge_rx_buffer(ftdi)
 	struct ftdi_context *ftdi;
     CODE:
@@ -314,5 +322,15 @@ dftdi_read_data(ftdi, buffer, size)
 	    sv_setpvn(buffer, tmp, RETVAL);
 	}
 	free(tmp);
+    OUTPUT:
+        RETVAL
+
+int
+dftdi_set_bitmode(ftdi, mask, mode)
+	struct ftdi_context *ftdi;
+	unsigned char mask;
+	unsigned char mode;
+    CODE:
+        RETVAL = ftdi_set_bitmode(ftdi, mask, mode);
     OUTPUT:
         RETVAL
