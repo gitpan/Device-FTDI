@@ -2,6 +2,8 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#define NEED_newRV_noinc
+#define NEED_sv_2pv_flags
 #include "ppport.h"
 
 /*#undef MARK*/
@@ -149,6 +151,15 @@ dftdi_open_device(vendor, product, description, serial, index)
 	    croak("Couldn't open specified device: %s", error_str);
 	}
 	RETVAL = ftdi;
+    OUTPUT:
+        RETVAL
+
+int
+dftdi_set_interface(ftdi, interface)
+	struct ftdi_context *ftdi;
+	int interface;
+    CODE:
+        RETVAL = ftdi_set_interface(ftdi, interface);
     OUTPUT:
         RETVAL
 
